@@ -1,0 +1,19 @@
+---
+- name: datip
+  host: all
+  gather_facts: no
+  tasks:
+  - name: setloopback0
+    ios_l3_interface:
+      name: loopback 0
+      ipv4: 10.10.10.10/24
+  - name: setInterfaceE0/2
+    ios_l3_interface:
+      name: interface ethernet0/2
+      ipv4: 192.168.10.11/24
+  - name: showIP
+    ios_command:
+      command:
+        - show ip int brief
+    register: show_ip
+  - debug: var=show_ip.stdout_lines
